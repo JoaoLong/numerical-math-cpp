@@ -2,7 +2,7 @@
 A set of C++ classes and programs to solve math problems numerically.
 This is our repository of C++ programs to solve math problems numerically, which can be also applied to many physics problems. This work was developed by me and my group of friends in Computational Physics class.
 
-The libraries [Eigen](https://eigen.tuxfamily.org/) (used for storing matrices) and [CERN-ROOT](https://cern.root/) (used for graphing) are required to run the code.
+The libraries [Eigen](https://eigen.tuxfamily.org/) (used for storing matrices) and [CERN-ROOT](https://root.cern/) (used for graphing) are required to run the code.
 
 The structure of classes is a class per type of problem. Each class has a main file (example, class.cpp, main tClass.cpp) with a code example of a problem. The folder structure is understandable from the Makefile code, and consists of:
 
