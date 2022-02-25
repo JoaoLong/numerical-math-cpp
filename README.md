@@ -4,10 +4,10 @@ This is our repository of C++ programs to solve math problems numerically, which
 
 The structure of classes is a class per type of problem. Each class has a main file (example, class.cpp, main tClass.cpp) with a code example of a problem. The folder structure is understandable from the Makefile code, and consists of:
 
-- Bin - binary and executable files, .o and .exe
-- Lib - library of classes
-- Main - main programs and files
-- Src - classes and header files.
+- bin - binary and executable files, .o and .exe
+- lib - library of classes
+- main - main programs and files
+- src - classes and header files.
 
 The classes available for each type of problem are:
 
