@@ -22,7 +22,7 @@ The classes available for each type of problem are:
 - Random number generator - *FCrand*.
 - Matrix methods - *FCmatrixAlgo*.
 - Systems of linear equations - *EqSolver*.
-- Interpolation - DataPoints, *Interpolator*.
+- Interpolation - *DataPoints*, *Interpolator*.
 - Functions - *Functor*, *FunctorND*, *VectorField*.
 - Derivatives and integrals - *IntegDeriv*, *IntegDerivND*, *IntegDerivVF*.
 - Nonlinear equations and systems - *RootFinder*, *RootFinderND*.
