@@ -10,7 +10,7 @@ The libraries [Eigen](https://eigen.tuxfamily.org/) (used for storing matrices) 
 **Folder structure:**
 The structure of classes is a class per type of problem. Each class has a main file (an example: *class.cpp* has as main *tClass.cpp*) with a code example of a problem. The folder structure is understandable from the Makefile code, and consists of:
 
-- *bin* - binary and executable files, .o and .exe.
+- *bin* - binary and executable files.
 - *lib* - library of classes for faster compilation.
 - *main* - main programs and files.
 - *src* - classes and header files.
