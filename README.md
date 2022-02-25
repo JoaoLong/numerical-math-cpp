@@ -15,10 +15,9 @@ The classes available for each type of problem are:
 - Matrix methods - FCmatrixAlgo
 - Systems of linear equations - EqSolver
 - Interpolation - DataPoints, Interpolator
-- Functions - Functor, FunctorND
-- Derivatives and integrals - IntegDeriv, IntegDerivND
+- Functions - Functor, FunctorND, VectorField
+- Derivatives and integrals - IntegDeriv, IntegDerivND, IntegDerivVF
 - Nonlinear equations and systems - RootFinder, RootFinderND
-- Vector fields - VectorField, IntegDerivVF
 - Ordinary differential equations - Xvar, ODEpoint, ODEsolver
 - Boundary value problems - BVPsolver
 - Partial differential equations - PDEpoint.
