@@ -1,6 +1,6 @@
 # Numerical math methods
 A set of C++ classes and programs to solve math problems numerically.
-This is our repository of C++ programs to solve math problems numerically, which can be also applied to many physics problems. This work was developed by my group of friends in a Computational Physics class: me, Bruna, Gonçalo and Manuel. 
+This is our repository of C++ programs to solve math problems numerically, which can be also applied to many physics problems. This work was developed by my group of friends in a Computational Physics class.
 
 The structure of classes is a class per type of problem. Each class has a main file (example, class.cpp, main tClass.cpp) with a code example of a problem. The folder structure is understandable from the Makefile code, and consists of:
 
