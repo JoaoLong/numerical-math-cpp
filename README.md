@@ -1,4 +1,4 @@
-# numerical-math-cpp
+# Numerical math methods
 A set of C++ classes and programs to solve math problems numerically.
 This is our repository of C++ programs to solve math problems numerically, which can be also applied to many physics problems. This work was developed by my group of friends in a Computational Physics class: me, Bruna, Gonçalo and Manuel. 
 
@@ -11,16 +11,16 @@ The structure of classes is a class per type of problem. Each class has a main f
 
 The classes available for each type of problem are:
 
-- Random generator: FCrand;
-- Matrix methods: FCmatrixAlgo;
-- Systems of linear equations: EqSolver;
-- Interpolation: DataPoints, Interpolator;
-- Functions: Functor, FunctorND;
-- Derivatives and integrals: IntegDeriv, IntegDerivND;
-- Nonlinear equations and systems: RootFinder, RootFinderND;
-- Vector fields: VectorField, IntegDerivVF;
-- Ordinary differential equations: Xvar, ODEpoint, ODEsolver;
-- Boundary value problems: BVPsolver;
-- Partial differential equations: PDEpoint;
+- Random number generator - FCrand
+- Matrix methods - FCmatrixAlgo
+- Systems of linear equations - EqSolver
+- Interpolation - DataPoints, Interpolator
+- Functions - Functor, FunctorND
+- Derivatives and integrals - IntegDeriv, IntegDerivND
+- Nonlinear equations and systems - RootFinder, RootFinderND
+- Vector fields - VectorField, IntegDerivVF
+- Ordinary differential equations - Xvar, ODEpoint, ODEsolver
+- Boundary value problems - BVPsolver
+- Partial differential equations - PDEpoint.
 
 We tried to make the code as broad and widely applicable as possible. Nonetheless, there are still classes in development, such as methods for solving some partial differential equations, Taylor and Fourier series, Fourier transforms and integrals on manifolds and of vector fields.
