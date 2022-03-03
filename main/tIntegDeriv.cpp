@@ -6,7 +6,7 @@ using namespace std;
 //Test main of class IntegDeriv
 
 int main() {
-
+    
     function<double(double)> f1 = [](double x) {
         return sin(x);
     };
@@ -81,6 +81,8 @@ int main() {
     cout << "\n Integral MC Von Neumann: " << integralmcvn << endl;
     cout << "\n Erro MC Von Neumann: " << errormcvn << endl;
 
+    //Monte Carlo importance sampling
+
     function<double(double)> g1 = [](double x) {
         return sin(x);
     };
@@ -109,5 +111,48 @@ int main() {
     cout << "\n Integral MC Importance Sampling Dist: " << integralmcis1 << endl;
     cout << "\n Error: " << errormcis1 << endl;
 
-    func.Draw(0, 10, 1000, "x", "y");
+    //Improper integrals
+
+    function<double(double)> fi1 = [](double x) {
+        return 1/(1+x*x);
+    };
+
+    function<double(double)> fi2 = [](double x) {
+        return exp(-x);
+    };
+
+    function<double(double)> fi3 = [](double x) {
+        return exp(x);
+    };
+
+    Functor funci1("1/(1+x²)", fi1);
+    IntegDeriv deriv1(funci1);
+
+    Functor funci2("exp(-x)", fi2);
+    IntegDeriv deriv2(funci2);
+
+    Functor funci3("exp(x)", fi3);
+    IntegDeriv deriv3(funci3);
+
+    int n = 1000000;
+
+    double error1 = 1E-3;
+    double integral1 = deriv1.ImproperIntegral(-5, 5, error1, n);
+
+    double error2 = 1E-3;
+    double integral2 = deriv2.ImproperIntegralRight(0, 1, error2, n);
+
+    double error3 = 1E-3;
+    double integral3 = deriv3.ImproperIntegralLeft(0, -1, error3, n);
+
+    cout << "\n Integral of exp(-x²): " << integral1 << endl;
+    cout << "\n Error: " << error1 << endl;
+
+    cout << "\n Integral of exp(-x): " << integral2 << endl;
+    cout << "\n Error: " << error2 << endl;
+
+    cout << "\n Integral of exp(x): " << integral3 << endl;
+    cout << "\n Error: " << error3 << endl;
+
+    //func.Draw(0, 10, 1000, "x", "y");
 }
