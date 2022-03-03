@@ -17,15 +17,20 @@ class IntegDeriv {
         double TrapezoidalRule(double, double, double&);
         double SimpsonRule(double, double, double&);
 
+        //Improper integrals
+        double ImproperIntegralLeft(double, double, double&, int);
+        double ImproperIntegralRight(double, double, double&, int);
+        double ImproperIntegral(double, double, double&, int);
+
         //Monte Carlo integration
-        double IntegrateMC(double, double, double&, int&);  
+        double IntegrateMC(double, double, double&, int);  
 
         //Monte Carlo importance sampling 
-        double IntegrateMCIS(double, double, std::function<double(double)>, std::function<double(double)>, double&, int&);
-        double IntegrateMCISDistribution(double, double, std::function<double(double)>, double&, int&);
+        double IntegrateMCIS(double, double, std::function<double(double)>, std::function<double(double)>, double&, int);
+        double IntegrateMCISDistribution(double, double, std::function<double(double)>, double&, int);
 
         //Monte Carlo von Neumann (acceptance-rejection)
-        double IntegrateMCVN(double, double, double&, int&);
+        double IntegrateMCVN(double, double, double&, int);
 
         //First derivative methods
         double D1backward(double, double);

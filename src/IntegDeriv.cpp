@@ -7,7 +7,7 @@ using namespace std;
 IntegDeriv::IntegDeriv(Functor &Fi) : F(Fi) {;}
 
 //Trapezoidal rule with 2^n partitions depending on given error
-double IntegDeriv::TrapezoidalRule(double xi, double xf, double &Error) {
+double IntegDeriv::TrapezoidalRule(double xi, double xf, double& Error) {
 
     double Integral = 0.;
     double error_aux = Error+1;
@@ -52,7 +52,7 @@ double IntegDeriv::TrapezoidalRule(double xi, double xf, double &Error) {
 }    
 
 //Simpson rule with 2^n partitions depending on given error
-double IntegDeriv::SimpsonRule(double xi, double xf, double &Error) {
+double IntegDeriv::SimpsonRule(double xi, double xf, double& Error) {
 
     double Integral = 0.;
     double error_aux = 0.;
@@ -111,8 +111,104 @@ double IntegDeriv::SimpsonRule(double xi, double xf, double &Error) {
     return Integral;
 }
 
+//Improper integral from -infinity to xf with breaking point a
+double IntegDeriv::ImproperIntegralLeft(double xf, double a, double& Error, int n) {
+    
+    if (a == 0) {
+        cout << "\n The breaking point cannot be zero." << endl;
+        exit(0);
+    }
+
+    if (a >= xf) {
+        cout << "\n The breaking point must be left of the endpoint." << endl;
+        exit(0);
+    }
+
+    double errormiddle = Error;
+    double errorleft = Error;
+    double middle = SimpsonRule(a, xf, errormiddle);
+    
+    function<double(double)> f1 = [this](double x) {
+        return F(1/x)/(x*x);
+    };
+
+    Functor* func = new Functor("f(1/x)/x²", f1);
+    IntegDeriv* deriv = new IntegDeriv(*func);
+    
+    double left = deriv->IntegrateMC(1/a, 0, errorleft, n);
+
+    if (a > 0) {
+        left -= left;
+    }
+
+    Error = errormiddle + errorleft;
+    return (middle + left);
+}
+
+//Improper integral from xi to +infinity with breaking point a
+double IntegDeriv::ImproperIntegralRight(double xi, double b, double& Error, int n) {
+   if (b == 0) {
+        cout << "\n The breaking point cannot be zero." << endl;
+        exit(0);
+    }
+
+    if (b <= xi) {
+        cout << "\n The breaking point must be right of the endpoint." << endl;
+        exit(0);
+    }
+
+    double errormiddle = Error;
+    double errorright = Error;
+    double middle = SimpsonRule(xi, b, errormiddle);
+    
+    function<double(double)> f1 = [this](double x) {
+        return F(1/x)/(x*x);
+    };
+
+    Functor* func = new Functor("f(1/x)/x²", f1);
+    IntegDeriv* deriv = new IntegDeriv(*func);
+    
+    double right = deriv->IntegrateMC(0, 1/b, errorright, n);
+
+    if (b < 0) {
+        right -= right;
+    }
+
+    Error = errormiddle + errorright;
+    return (middle + right);
+}
+
+//Improper integral from -infinity to +infinity with breaking points a, b
+double IntegDeriv::ImproperIntegral(double a, double b, double& Error, int n) {
+
+    if (a*b >= 0) {
+        cout << "\n The breaking points must have different signs." << endl;
+        return 0;
+    }
+
+    double errormiddle = Error;
+    double errorleft = Error;
+    double errorright = Error;
+    
+    double middle = SimpsonRule(a, b, errormiddle);
+    
+    function<double(double)> f1 = [this](double x) {
+        return F(1/x)/(x*x);
+    };
+
+    Functor* func = new Functor("f(1/x)/x²", f1);
+    IntegDeriv* deriv = new IntegDeriv(*func);
+    
+    double left = deriv->IntegrateMC(1/a, 0, errorleft, n);
+    double right = deriv->IntegrateMC(0, 1/b, errorright, n);
+
+    Error = errormiddle + errorright + errorleft;
+    return (middle + left + right);
+
+}
+
 //Monte Carlo integration
-double IntegDeriv::IntegrateMC(double xi, double xf, double& Error, int& n) {
+double IntegDeriv::IntegrateMC(double xi, double xf, double& Error, int n) {
     double Integral = 0;
     Error = 0;
     double sum = 0.;
@@ -139,7 +235,7 @@ double IntegDeriv::IntegrateMC(double xi, double xf, double& Error, int& n) {
 
 //Analytical Monte Carlo importance sampling
 double IntegDeriv::IntegrateMCIS(double xi, double xf, std::function<double(double)> px, std::function<double(double)> xy,
-                                double& Error, int& n) {
+                                double& Error, int n) {
     
     double Integral = 0;
     Error = 0;
@@ -166,7 +262,7 @@ double IntegDeriv::IntegrateMCIS(double xi, double xf, std::function<double(doub
 } 
 
 //Monte Carlo importance sampling with random numbers generated directly from distribution 
-double IntegDeriv::IntegrateMCISDistribution(double xi, double xf, std::function<double(double)> px, double& Error, int& n) {
+double IntegDeriv::IntegrateMCISDistribution(double xi, double xf, std::function<double(double)> px, double& Error, int n) {
     double Integral = 0;
     Error = 0;
     double sum = 0.;
@@ -198,7 +294,7 @@ double IntegDeriv::IntegrateMCISDistribution(double xi, double xf, std::function
 }
 
 //Monte Carlo von Neumann (acceptance-rejection)
-double IntegDeriv::IntegrateMCVN(double xi, double xf, double& Error, int& n) {
+double IntegDeriv::IntegrateMCVN(double xi, double xf, double& Error, int n) {
     double Integral = 0;
     Error = 0;
     double fmax = F(xi);
