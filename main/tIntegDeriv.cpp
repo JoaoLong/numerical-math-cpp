@@ -41,31 +41,33 @@ int main() {
         errorsum += errormc;
     }    
     
-    cout << "\n f'(2) = " << f.D1backward(h, x);
-    cout << "\n f'(2) = " << f.D1central(h, x);
-    cout << "\n f'(2) = " << f.D1forward(h, x);
-    cout << "\n f'(2) = " << f.D1fivepoint(h, x);
+    cout << "\n f'(12) = " << f.D1backward(h, x);
+    cout << "\n f'(12) = " << f.D1central(h, x);
+    cout << "\n f'(12) = " << f.D1forward(h, x);
+    cout << "\n f'(12) = " << f.D1fivepoint(h, x);
 
     cout << "\n\n";
 
-    cout << "\n f''(2) = " << f.D2backward(h2, x);
-    cout << "\n f''(2) = " << f.D2central(h2, x);
-    cout << "\n f''(2) = " << f.D2forward(h2, x);
-    cout << "\n f''(2) = " << f.D2fivepoint(h2, x);
+    cout << "\n f''(12) = " << f.D2backward(h2, x);
+    cout << "\n f''(12) = " << f.D2central(h2, x);
+    cout << "\n f''(12) = " << f.D2forward(h2, x);
+    cout << "\n f''(12) = " << f.D2fivepoint(h2, x);
 
     cout << "\n\n";
 
-    cout << "\n f'''(2) = " << f.D3backward(h3, x);
-    cout << "\n f'''(2) = " << f.D3central(h3, x);
-    cout << "\n f'''(2) = " << f.D3forward(h3, x);
-    cout << "\n f'''(2) = " << f.D3fivepoint(h3, x);
+    cout << "\n f'''(12) = " << f.D3backward(h3, x);
+    cout << "\n f'''(12) = " << f.D3central(h3, x);
+    cout << "\n f'''(12) = " << f.D3forward(h3, x);
+    cout << "\n f'''(12) = " << f.D3fivepoint(h3, x);
 
     cout << "\n\n";
 
-    cout << "\n f''''(2) = " << f.D4backward(h4, x);
-    cout << "\n f''''(2) = " << f.D4central(h4, x);
-    cout << "\n f''''(2) = " << f.D4forward(h4, x);
-    cout << "\n f''''(2) = " << f.D4fivepoint(h4, x);
+    cout << "\n f''''(12) = " << f.D4backward(h4, x);
+    cout << "\n f''''(12) = " << f.D4central(h4, x);
+    cout << "\n f''''(12) = " << f.D4forward(h4, x);
+    cout << "\n f''''(12) = " << f.D4fivepoint(h4, x);
+
+    cout << "\n d^8/dx^8 (12) = " << f.Dncentral(8, h4, x);
 
     cout << "\n\n";
 
