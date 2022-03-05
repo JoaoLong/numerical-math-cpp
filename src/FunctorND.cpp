@@ -50,7 +50,7 @@ void FunctorND::Draw(double xi, double xf, double yi, double yf, int nx, int ny,
         graph->SetMarkerColor(kBlack);
         graph->SetFillColor(68);
        
-        string title = "Grafico de f(x,y) = " + this->name;
+        string title = "Graph of f(x,y) = " + this->name;
         graph->SetTitle(&title[0]);
 
         vector<double> v;

@@ -27,6 +27,9 @@ class Functor {
         //Draw function in [xi, xf]
         void Draw(double, double, int, std::string, std::string);
 
+        //Getter for string name
+        std::string GetName();
+
     private:
         //Function expression as a string, "x sin(x)"
         std::string name;

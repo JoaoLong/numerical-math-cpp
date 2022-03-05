@@ -57,7 +57,7 @@ class IntegDeriv {
         double D4fivepoint(double, double);
 
         //Nth derivative with central finite difference
-        double Dncentral(double, double);
+        double Dncentral(int, double, double);
         
     private:
         //Function to differentiate and integrate

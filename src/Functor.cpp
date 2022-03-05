@@ -23,7 +23,7 @@ void Functor::Draw(double xi, double xf, int num, std::string xtitle, std::strin
     double dx = (xf-xi)/(num-1);
 
     TApplication *app = new TApplication("app", nullptr, nullptr);
-    TCanvas *c = new TCanvas("c", "Graph of the points in class DataPoints", 0, 0, 1920,1080);
+    TCanvas *c = new TCanvas("c", "Graph of function f(x)", 0, 0, 1920,1080);
     TRootCanvas *close = (TRootCanvas *)c->GetCanvasImp();
     close->Connect("CloseWindow()", "TApplication", gApplication, "Terminate()");
 
@@ -38,7 +38,7 @@ void Functor::Draw(double xi, double xf, int num, std::string xtitle, std::strin
     graph->SetFillColor(68);
     graph->GetXaxis()->SetTitle(xtitle.c_str());
     graph->GetYaxis()->SetTitle(ytitle.c_str());
-    string title = "Grafico de f(x) = " + this->name;
+    string title = "Graph of f(x) = " + this->name;
     graph->SetTitle(&title[0]);
     c->SetGrid();
 
@@ -50,4 +50,9 @@ void Functor::Draw(double xi, double xf, int num, std::string xtitle, std::strin
     c->Update();
     c->SaveAs("functor.pdf");
     app->Run();
+}
+
+//Getter for string name
+string Functor::GetName() {
+    return name;
 }

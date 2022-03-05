@@ -4,7 +4,7 @@
 
 using namespace std;
 
-IntegDeriv::IntegDeriv(Functor &Fi) : F(Fi) {;}
+IntegDeriv::IntegDeriv(Functor& Fi) : F(Fi) {;}
 
 //Trapezoidal rule with 2^n partitions depending on given error
 double IntegDeriv::TrapezoidalRule(double xi, double xf, double& Error) {
@@ -408,4 +408,37 @@ double IntegDeriv::D4central(double h, double x) {
 //Fourth derivative O(h⁴)
 double IntegDeriv::D4fivepoint(double h, double x) {
     return (-F(x-3*h) + 12*F(x-2*h) - 39*F(x-h) + 56*F(x) -F(x+3*h) + 12*F(x+2*h) - 39*F(x+h))/(6*h*h*h*h);
+}
+
+//Nth derivative with central finite difference
+double IntegDeriv::Dncentral(int n, double h, double x) {
+    
+	double parcela = 0;
+	double result = 0;
+
+    /* if (n <= 4) {
+        cout << "\n Note that there are functions defined for derivatives of order 4 or less." << endl;
+    } */
+
+    function<int(int, int)> nCr = [&nCr](int n, int k) {
+        if (k > n) {
+            return 0;
+        }    
+        if (k == 0 || k == n) {
+            return 1;
+        }
+        return nCr(n - 1, k - 1) + nCr(n - 1, k);
+    };
+
+	h = pow(1e-10, 1/(double)n);
+
+	for (int i = 0; i < n+1; i++){
+		parcela = nCr(n,i)*F(x+(n/2-i)*h);
+		if (i % 2 != 0) { 
+            parcela = -parcela;
+        }    
+		result += parcela;
+	}
+
+	return result/pow(h,n);
 }
