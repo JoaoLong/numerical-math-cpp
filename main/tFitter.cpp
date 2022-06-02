@@ -15,7 +15,7 @@ int main() {
 
     //Set fitting function with parameters [0], [1], etc
     double xi = 0;
-    double xf = 1500;
+    double xf = 3;
 
     //0 - 1/sqrt(2pi sigma), 1 - media, 2 - sigma
     TF1* f1 = new TF1("f1", "[0] + [1]*x", 0.2, 2.8);
@@ -27,7 +27,7 @@ int main() {
     //SetParameter(nº parameter, valor)
     /* f1->SetParameter(0, 2.5);
     f1->SetParameter(1, 1.5); */
-    
+
     //SetParLimits(nº parameter, minimum value, maximum value)
     /* f1->SetParLimits(0, 2, 3);
     f1->SetParLimits(1, 1, 2); */
@@ -38,7 +38,14 @@ int main() {
     //fitlinear.SetFitFunction(fi);
 
     fitlinear.Print("m", "kg");
-    fitlinear.DrawFit(xi, xf, 0, 12, "Linear fit", "x", "y");
+    fitlinear.DrawFit(xi, xf, 0, 5, "Linear fit", "x", "y");
+
+    //GetParameter(nº parameter)
+    /* double a = f1->GetParameter(0);
+    double b = f1->GetParameter(1);
+    
+    cout << a << endl;
+    cout << b << endl; */
 
     return 0;
 }
