@@ -3,19 +3,26 @@
 using namespace std;
 
 //Constructor with two vectors of pair, points and errors
-Fitter::Fitter(vector<pair<double,double>> p, vector<pair<double,double>> e, TF1* fi) { //Constructor
+Fitter::Fitter(vector<pair<double,double>> p, vector<pair<double,double>> e, std::vector<TF1*> fi) { //Constructor
     points.resize(p.size());
     copy(p.begin(), p.end(), points.begin());
 
     errors.resize(e.size());
     copy(e.begin(), e.end(), errors.begin());
-    f = fi;
+    f.resize(fi.size());
+    for (int i = 0; i < f.size(); i++) {
+        f[i] = fi[i];
+    }
+    //f = fi;
 } 
 
-//Constructor reading from file with 2-4 columns (x, y, ex, ey)
-Fitter::Fitter(string filename, TF1* fi) {
+//Constructor reading from txt file with 2-4 columns (x, y, ex, ey)
+Fitter::Fitter(string filename, std::vector<TF1*> fi) {
     string line;
     ifstream infile;
+
+    //Fitting with errors does not accept ey=0. If it is 0, invert the fit. If both are zero, no problem
+
     double x=0, y=0, ex=0, ey=0;
     int n = 0;
 
@@ -34,12 +41,16 @@ Fitter::Fitter(string filename, TF1* fi) {
     }
 
     infile.close();
-    f = fi;
+    f.resize(fi.size());
+    for (int i = 0; i < f.size(); i++) {
+        f[i] = fi[i];
+    }
+    //f = fi;
 }
 
 //Destructor
 Fitter::~Fitter() {
-    delete f;
+    //delete f;
 }
 
 //Setter for points
@@ -67,46 +78,22 @@ vector<pair<double,double>> Fitter::GetErrors() {
 }
 
 //Setter for function to fit
-void Fitter::SetFitFunction(TF1* F1) { 
-    f = F1;
+void Fitter::SetFitFunction(std::vector<TF1*> F1) { 
+    f.resize(F1.size());
+    for (int i = 0; i < f.size(); i++) {
+        f[i] = F1[i];
+    }
 } 
 
 //Getter for function to fit
-TF1* Fitter::GetFitFunction() { 
+std::vector<TF1*> Fitter::GetFitFunction() { 
     return f;
 } 
 
 //Draw points
-void Fitter::DrawPoints() { 
-    TApplication app("app", nullptr, nullptr);
-    TCanvas *c1 = new TCanvas("c1","Graph of the points in class DataPoints", 100, 100, 800, 600);
-    TRootCanvas *rc = (TRootCanvas *)c1->GetCanvasImp();
-    rc->Connect("CloseWindow()", "TApplication", gApplication, "Terminate()");
-
-    TGraphErrors *graph = new TGraphErrors(); 
-    
-    for (int i = 0; i < points.size(); ++i) {
-        graph->SetPoint(i, points[i].first, points[i].second);
-        graph->SetPointError(i, errors[i].first, errors[i].second);
-    }
-
-    c1->SetGrid();
-    graph->SetMarkerColor(kBlue);
-    graph->SetLineWidth(1);
-    graph->SetMarkerStyle(kFullCircle);
-    graph->Draw("AP");
-
-    c1->Update();
-    c1->SaveAs("fitterpoints.pdf");
-    
-    app.Run();
-} 
-
-//Draw points and fitted curve
-void Fitter::DrawFit() { 
-
+void Fitter::DrawPoints(double xi, double xf, double yi, double yf, string title, string xtitle, string ytitle) { 
     TApplication app1("app", nullptr, nullptr);
-    TCanvas *c1 = new TCanvas("c1", "Graph of the points in class DataPoints", 0, 0, 1920, 1080);
+    TCanvas *c1 = new TCanvas("c1", &title[0], 0, 0, 1920, 1080);
     TRootCanvas *rc1 = (TRootCanvas *)c1->GetCanvasImp();
     rc1->Connect("CloseWindow()", "TApplication", gApplication, "Terminate()");
 
@@ -117,30 +104,82 @@ void Fitter::DrawFit() {
         graph1->SetPointError(i, errors[i].first, errors[i].second);
     }
 
-    f->SetLineColor(kBlue);
-    f->SetLineWidth(3);
     c1->SetGrid();
     graph1->SetMarkerStyle(kFullCircle);
-    graph1->SetMarkerSize(0.5);
+    graph1->SetMarkerColor(kBlack);
+    graph1->SetMarkerSize(1);
     graph1->SetLineWidth(1);
+    graph1->SetMinimum(yi);
+    graph1->SetMaximum(yf);
+
+    graph1->GetXaxis()->SetLimits(xi, xf);
+    graph1->GetXaxis()->SetTitle(xtitle.c_str());
+    graph1->GetYaxis()->SetTitle(ytitle.c_str());
+    graph1->SetTitle(&title[0]);
+    
+    graph1->Draw("AP");
+
+    string name = title + "points.pdf";
+
+    c1->Update();
+    c1->SaveAs(&name[0]);
+
+    app1.Run();
+} 
+
+//Draw points and fitted curve
+void Fitter::DrawFit(double xi, double xf, double yi, double yf, string title, string xtitle, string ytitle) { 
+
+    TApplication app1("app", nullptr, nullptr);
+    TCanvas *c1 = new TCanvas("c1", &title[0], 0, 0, 1920, 1080);
+    TRootCanvas *rc1 = (TRootCanvas *)c1->GetCanvasImp();
+    rc1->Connect("CloseWindow()", "TApplication", gApplication, "Terminate()");
+
+    TGraphErrors *graph1 = new TGraphErrors(points.size());
+
+    for (int i = 0; i < points.size(); ++i) {
+        graph1->SetPoint(i, points[i].first, points[i].second);
+        graph1->SetPointError(i, errors[i].first, errors[i].second);
+    }
+
+    c1->SetGrid();
+    graph1->SetMarkerStyle(kFullCircle);
+    graph1->SetMarkerColor(kBlack);
+    graph1->SetMarkerSize(1);
+    graph1->SetLineWidth(2);
+    graph1->SetMinimum(yi);
+    graph1->SetMaximum(yf);
 
     //SetParameters, SetRange
     //v - verbose, q - quiet, R - range 
-    graph1->Fit(f, "R");
-    graph1->SetTitle("Refraction Index vs. Wavelength;Wavelength [#mu#m];Refraction Index");
+
+    graph1->Fit(f[0], "R");
+    for (int i = 1; i < f.size(); i++) {
+        f[i]->SetLineWidth(2);
+        graph1->Fit(f[i], "R+");
+    }
+
+    graph1->GetXaxis()->SetLimits(xi, xf);
+    graph1->GetXaxis()->SetTitle(xtitle.c_str());
+    graph1->GetYaxis()->SetTitle(ytitle.c_str());
+    graph1->SetTitle(&title[0]);
+    gStyle->SetOptFit();
+    
     graph1->Draw("AP");
 
+    string name = title + ".png";
+
     c1->Update();
-    c1->SaveAs("fitterfit.pdf");
+    c1->SaveAs(&name[0]);
 
     app1.Run();
 } 
 
 //Print points and error values
-void Fitter::Print() { 
+void Fitter::Print(string unitx, string unity) { 
     for (int i = 0; i < points.size(); i++) {
-        cout << "X = (" << points[i].first << " +/- " << errors[i].first << " ) [um]" << endl;
-        cout << "Y = (" << points[i].second << " +/- " << errors[i].second << " ) [um]" << endl;
+        cout << "X = (" << points[i].first << " +/- " << errors[i].first << ") [" << unitx << "]" << endl;
+        cout << "Y = (" << points[i].second << " +/- " << errors[i].second << ") [" << unity << "]" << endl;
         cout << "\n\n";
     } 
 } 

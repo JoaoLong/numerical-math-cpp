@@ -36,8 +36,8 @@ class Fitter {
     public:
         //Constructors and destructor
         Fitter() = default;
-        Fitter(std::vector<std::pair<double,double>>, std::vector<std::pair<double,double>>, TF1*);
-        Fitter(std::string filename, TF1*);
+        Fitter(std::vector<std::pair<double,double>>, std::vector<std::pair<double,double>>, std::vector<TF1*>);
+        Fitter(std::string filename, std::vector<TF1*>);
         ~Fitter();
 
         //Getter and setter for points and errors
@@ -47,17 +47,17 @@ class Fitter {
         std::vector<std::pair<double,double>> GetErrors();
         
         //Getter and setter for function to fit
-        void SetFitFunction(TF1*);
-        TF1* GetFitFunction(); 
+        void SetFitFunction(std::vector<TF1*>);
+        std::vector<TF1*> GetFitFunction(); 
         
         //Draw points
-        void DrawPoints(); 
+        void DrawPoints(double, double, double, double, std::string, std::string, std::string); 
 
         //Draw points and fitted curve
-        void DrawFit(); 
+        void DrawFit(double, double, double, double, std::string, std::string, std::string); 
 
         //Print points and error values
-        void Print();
+        void Print(std::string, std::string);
 
     private:
         //Points and respective errors
@@ -65,7 +65,7 @@ class Fitter {
         std::vector<std::pair<double,double>> errors;
 
         //ROOT function TF1 to fit 
-        TF1* f;
+        std::vector<TF1*> f;
 };
 
 #endif
