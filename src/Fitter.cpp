@@ -112,6 +112,9 @@ void Fitter::DrawPoints(double xi, double xf, double yi, double yf, string title
     graph1->SetMinimum(yi);
     graph1->SetMaximum(yf);
 
+    //gPad->SetLogx();
+    //gPad->SetLogy();
+
     graph1->GetXaxis()->SetLimits(xi, xf);
     graph1->GetXaxis()->SetTitle(xtitle.c_str());
     graph1->GetYaxis()->SetTitle(ytitle.c_str());
@@ -119,13 +122,31 @@ void Fitter::DrawPoints(double xi, double xf, double yi, double yf, string title
     
     graph1->Draw("AP");
 
-    string name = title + "points.pdf";
+    string name = title + "points.png";
 
     c1->Update();
     c1->SaveAs(&name[0]);
 
     app1.Run();
 } 
+
+//Fit function without plotting
+void Fitter::Fit() {
+    TGraphErrors *graph1 = new TGraphErrors(points.size());
+
+    for (int i = 0; i < points.size(); ++i) {
+        graph1->SetPoint(i, points[i].first, points[i].second);
+        graph1->SetPointError(i, errors[i].first, errors[i].second);
+    }
+
+    //v - verbose, q - quiet, R - range 
+
+    graph1->Fit(f[0], "R");
+    for (int i = 1; i < f.size(); i++) {
+        f[i]->SetLineWidth(2);
+        graph1->Fit(f[i], "R+");
+    }
+}
 
 //Draw points and fitted curve
 void Fitter::DrawFit(double xi, double xf, double yi, double yf, string title, string xtitle, string ytitle) { 
@@ -163,6 +184,10 @@ void Fitter::DrawFit(double xi, double xf, double yi, double yf, string title, s
     graph1->GetXaxis()->SetTitle(xtitle.c_str());
     graph1->GetYaxis()->SetTitle(ytitle.c_str());
     graph1->SetTitle(&title[0]);
+
+    //gPad->SetLogx();
+    //gPad->SetLogy();
+
     gStyle->SetOptFit();
     
     graph1->Draw("AP");

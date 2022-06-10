@@ -53,6 +53,9 @@ class Fitter {
         //Draw points
         void DrawPoints(double, double, double, double, std::string, std::string, std::string); 
 
+        //Fit function without plotting
+        void Fit();
+
         //Draw points and fitted curve
         void DrawFit(double, double, double, double, std::string, std::string, std::string); 
 
