@@ -32,20 +32,26 @@ int main() {
     /* f1->SetParLimits(0, 2, 3);
     f1->SetParLimits(1, 1, 2); */
 
+    //FixParameter(nº parameter, value)
+    /*f1->FixParameter(0, 2.5);*/
+
     Fitter fitlinear(v, e, fi);
     //Fitter fitlinear(s, fi);
 
     //fitlinear.SetFitFunction(fi);
 
     fitlinear.Print("m", "kg");
-    fitlinear.DrawFit(xi, xf, 0, 5, "Linear fit", "x", "y");
+    fitlinear.Fit();
+    
 
     //GetParameter(nº parameter)
-    /* double a = f1->GetParameter(0);
+    double a = f1->GetParameter(0);
     double b = f1->GetParameter(1);
     
     cout << a << endl;
-    cout << b << endl; */
+    cout << b << endl;
+
+    fitlinear.DrawFit(xi, xf, 0, 5, "Linear fit", "x", "y");
 
     return 0;
 }
