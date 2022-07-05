@@ -243,7 +243,7 @@ const std::vector<ODEpoint>& ODEsolver::RungeKutta4Solver(double step, double tm
 //Draw graph of solution in [ti, tf], string for the key of map
 void ODEsolver::Draw(std::vector<std::string> s, double ti, double tf) {
     TApplication *app = new TApplication("app", nullptr, nullptr);
-    TCanvas *c = new TCanvas("c", "Solutions of the pendulum differential equation", 0, 0, 1280, 720);
+    TCanvas *c = new TCanvas("c", "Solutions of system of differential equations", 0, 0, 1280, 720);
     TRootCanvas *close = (TRootCanvas *)c->GetCanvasImp();
     close->Connect("CloseWindow()", "TApplication", gApplication, "Terminate()");
 

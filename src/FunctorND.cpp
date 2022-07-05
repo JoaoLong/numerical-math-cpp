@@ -34,7 +34,7 @@ double FunctorND::operator() (vector<double> x) {
 void FunctorND::Draw(double xi, double xf, double yi, double yf, int nx, int ny, std::string xtitle, std::string ytitle, std::string ztitle) {
     if (dim == 2) {    
         TApplication *app = new TApplication("app", nullptr, nullptr);
-        TCanvas *c = new TCanvas("c", "Graph of the points in class DataPoints", 0, 0, 1920, 1080);
+        TCanvas *c = new TCanvas("c", "Graph of function f(x, y)", 0, 0, 1280, 720);
         TRootCanvas *close = (TRootCanvas *)c->GetCanvasImp();
         close->Connect("CloseWindow()", "TApplication", gApplication, "Terminate()");
 

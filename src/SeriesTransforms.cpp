@@ -77,7 +77,7 @@ void SeriesTransforms::Draw(int n, double x0, double L, double xi, double xf, in
     double dx = (xf-xi)/(num-1);
 
     TApplication *app = new TApplication("app", nullptr, nullptr);
-    TCanvas *c = new TCanvas("c", "Taylor and Fourier series", 0, 0, 1920,1080);
+    TCanvas *c = new TCanvas("c", "Taylor and Fourier series", 0, 0, 1280, 720);
     TRootCanvas *close = (TRootCanvas *)c->GetCanvasImp();
     close->Connect("CloseWindow()", "TApplication", gApplication, "Terminate()");
 

@@ -273,7 +273,7 @@ double Interpolator::InterpolateTrigonometric(double x) {
 //Draw points and interpolated curve, with string "Lagrange", "Newton", "Spline3", "Trigonometric", "All", "Points"
 void Interpolator::Draw(std::string s) {
     TApplication app("app", nullptr, nullptr);
-    TCanvas *c = new TCanvas("c", "Graph of the points in class DataPoints", 0, 0, 1800, 1000);
+    TCanvas *c = new TCanvas("c", "Interpolation of points (x, y)", 0, 0, 1280, 720);
     TRootCanvas *rc = (TRootCanvas *)c->GetCanvasImp();
     rc->Connect("CloseWindow()", "TApplication", gApplication, "Terminate()");
 

@@ -93,7 +93,7 @@ std::vector<TF1*> Fitter::GetFitFunction() {
 //Draw points
 void Fitter::DrawPoints(double xi, double xf, double yi, double yf, string title, string xtitle, string ytitle) { 
     TApplication app1("app", nullptr, nullptr);
-    TCanvas *c1 = new TCanvas("c1", &title[0], 0, 0, 1920, 1080);
+    TCanvas *c1 = new TCanvas("c1", &title[0], 0, 0, 1280, 720);
     TRootCanvas *rc1 = (TRootCanvas *)c1->GetCanvasImp();
     rc1->Connect("CloseWindow()", "TApplication", gApplication, "Terminate()");
 
@@ -152,7 +152,8 @@ void Fitter::Fit() {
 void Fitter::DrawFit(double xi, double xf, double yi, double yf, string title, string xtitle, string ytitle) { 
 
     TApplication app1("app", nullptr, nullptr);
-    TCanvas *c1 = new TCanvas("c1", &title[0], 0, 0, 1920, 1080);
+    TCanvas *c1 = new TCanvas("c1", &title[0], 0, 0, 1280, 720);
+    //TCanvas *c1 = new TCanvas("c1", &title[0]);
     TRootCanvas *rc1 = (TRootCanvas *)c1->GetCanvasImp();
     rc1->Connect("CloseWindow()", "TApplication", gApplication, "Terminate()");
 

@@ -23,7 +23,7 @@ void Functor::Draw(double xi, double xf, int num, std::string xtitle, std::strin
     double dx = (xf-xi)/(num-1);
 
     TApplication *app = new TApplication("app", nullptr, nullptr);
-    TCanvas *c = new TCanvas("c", "Graph of function f(x)", 0, 0, 1920,1080);
+    TCanvas *c = new TCanvas("c", "Graph of function f(x)", 0, 0, 1280, 720);
     TRootCanvas *close = (TRootCanvas *)c->GetCanvasImp();
     close->Connect("CloseWindow()", "TApplication", gApplication, "Terminate()");
 
