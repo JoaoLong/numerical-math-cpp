@@ -26,7 +26,7 @@ The classes available for each type of problem are:
 - Functions - *Functor*, *FunctorND*, *VectorField*.
 - Derivatives and integrals - *IntegDeriv*, *IntegDerivND*, *IntegDerivVF*.
 - Nonlinear equations and systems - *RootFinder*, *RootFinderND*.
-- Graph fitting - *Fitter*, *MultiFitter*
+- Graph fitting - *Fitter*, *MultiFitter*.
 - Ordinary differential equations - *Xvar*, *ODEpoint*, *ODEsolver*.
 - Boundary value problems in ODEs - *BVPsolver*.
 - Partial differential equations - *PDEpoint*.
