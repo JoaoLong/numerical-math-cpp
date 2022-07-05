@@ -17,7 +17,6 @@ int main() {
     double xi = 0;
     double xf = 3;
 
-    //0 - 1/sqrt(2pi sigma), 1 - media, 2 - sigma
     TF1* f1 = new TF1("f1", "[0] + [1]*x", 0.2, 2.8);
 
     vector<TF1*> fi;
@@ -35,6 +34,9 @@ int main() {
     //FixParameter(nº parameter, value)
     /*f1->FixParameter(0, 2.5);*/
 
+    //GetParameter(nº parameter)
+    /*double a = f1->GetParameter(0);*/
+
     Fitter fitlinear(v, e, fi);
     //Fitter fitlinear(s, fi);
 
@@ -42,14 +44,6 @@ int main() {
 
     fitlinear.Print("m", "kg");
     fitlinear.Fit();
-    
-
-    //GetParameter(nº parameter)
-    double a = f1->GetParameter(0);
-    double b = f1->GetParameter(1);
-    
-    cout << a << endl;
-    cout << b << endl;
 
     fitlinear.DrawFit(xi, xf, 0, 5, "Linear fit", "x", "y");
 
